@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.json.simple.JSONObject;
 
@@ -37,7 +38,7 @@ public class RequestController {
 	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAPIKey(@Context HttpServletRequest request) {
+	public Response getAPIKey(@Context HttpServletRequest request) {
 		
 		System.out.println("------------");
 		System.out.println(request.getRequestURI());
@@ -55,7 +56,10 @@ public class RequestController {
 		String returnData = createEntityJSONParser.JSONParser();
 		System.out.println(returnData);	
 		
-		return returnData;
+		if(returnData.contains("failure"))
+			 return Response.status(Response.Status.CONFLICT).entity(returnData).build();
+		
+		return Response.ok(returnData, MediaType.APPLICATION_JSON).build();
 	}
 	
 	@DELETE
