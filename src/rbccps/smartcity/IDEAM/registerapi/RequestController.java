@@ -56,9 +56,20 @@ public class RequestController {
 		String returnData = createEntityJSONParser.JSONParser();
 		System.out.println(returnData);	
 		
-		if(returnData.contains("failure"))
+		if(returnData.contains("ID already used"))
 			 return Response.status(Response.Status.CONFLICT).entity(returnData).build();
 		
+		else if(returnData.contains("uCat update Failure")||returnData.contains("Server Not Reachable")||returnData.contains("API KeyGen failed")
+				||returnData.contains("Failed in Broker")||returnData.contains("Failed in adding ID into the ACL")
+				||returnData.contains("LDAP update Failure")|| returnData.contains("Queue Deletion Failure")||returnData.contains("uCat deletion Failure"))
+			 return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity(returnData).build();
+		
+		else if(returnData.contains("ID not provided")||returnData.contains("Security level must be between 1-5")||returnData.contains("JSON parse error")||returnData.contains("Possible missing fields")||returnData.contains("Missing LoRa information")||returnData.contains("Missing Video information")
+				||returnData.contains("Cannot Onboard Video camera in VideoServer. POST Error.")||returnData.contains("serverConfiguration_credentials, some field not found in json")
+				||returnData.contains("PlayURL is not specified in json"))
+			 return Response.status(Response.Status.BAD_REQUEST).entity(returnData).build();
+	
+		else
 		return Response.ok(returnData, MediaType.APPLICATION_JSON).build();
 	}
 	
@@ -114,7 +125,6 @@ public class RequestController {
 				System.out.println("Using default security level of 4");
 			    security_level=String.valueOf(4);	
 			}
-			
 		}
 		
 		System.out.println(security_level);
