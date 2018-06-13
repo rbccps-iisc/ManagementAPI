@@ -1,4 +1,4 @@
-package rbccps.smartcity.IDEAM.followapi;
+package rbccps.smartcity.IDEAM.registerapi;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,19 +26,9 @@ import org.json.simple.JSONObject;
  * Servlet implementation class follow
  */
 @Path("/follow")
-public class follow extends HttpServlet {
+public class RequestFollow extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@GET
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	@POST
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	static JSONObject responseObj;
 	static String response;
 	static String authorization;
@@ -49,9 +39,18 @@ public class follow extends HttpServlet {
 	static String body;
 	
 	
+
+	@GET
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response followRequest(@Context HttpServletRequest request) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
 		
 		System.out.println("------------");
 		System.out.println(request.getRequestURI());
@@ -65,7 +64,6 @@ public class follow extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
 		}
 	
 	private void getHeaderInfo(HttpServletRequest request) {
