@@ -1,4 +1,4 @@
-package rbccps.smartcity.IDEAM.registerapi;
+package rbccps.smartcity.IDEAM.APIs;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

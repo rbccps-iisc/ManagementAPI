@@ -1,4 +1,4 @@
-package rbccps.smartcity.IDEAM.registerapi;
+package rbccps.smartcity.IDEAM.APIs;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,13 +22,19 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.json.simple.JSONObject;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import rbccps.smartcity.IDEAM.registerapi.lora.loraserverConfigurationFields;
+
 /**
  * Servlet implementation class follow
  */
 @Path("/follow")
 public class RequestFollow extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
+	public static final long serialVersionUID = 1L;
 	static JSONObject responseObj;
 	static String response;
 	static String authorization;
@@ -38,19 +44,36 @@ public class RequestFollow extends HttpServlet {
 	static String X_Consumer_Groups;
 	static String body;
 	
+	static JsonParser parser;
+	static JsonElement jsonTree;
+	static JsonObject jsonObject;
+	static String requestorID = null; 
 	
+	static JsonElement entityID;
+	static String _entityID = null;
+	
+	static JsonElement permission;
+	static String _permission = null;
+	
+	static JsonElement validity;
+	static String _validity = null;
+	
+	static rbccps.smartcity.IDEAM.registerapi.broker.broker broker;
 
 	@GET
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+	public void doGet(@Context HttpServletResponse response) throws IOException{
+		
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("In RequestRedirect");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+		response.sendRedirect("http://rbccps.org/smartcity/");
+		return;
+}
 
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void doPost(@Context HttpServletRequest request, @Context HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 		
 		System.out.println("------------");
 		System.out.println(request.getRequestURI());
@@ -59,14 +82,15 @@ public class RequestFollow extends HttpServlet {
 		try {
 			getHeaderInfo(request);
 			body = getBody(request);
-			// System.out.println(body);
+			getfollowID(body);		
+			sendfollowrequest(_entityID,_permission, X_Consumer_Username, _validity);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		}
-	
-	private void getHeaderInfo(HttpServletRequest request) {
+
+	private void getHeaderInfo(@Context HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		System.out.println("In Request Header");
 		
@@ -89,7 +113,7 @@ public class RequestFollow extends HttpServlet {
 		System.out.println("------------HEADERS----------------");
 	}
 
-	private String getBody(HttpServletRequest request) throws IOException {
+	private String getBody(@Context HttpServletRequest request) throws IOException {
 		// TODO Auto-generated method stub
 		
 		System.out.println("In Request Body");
@@ -108,7 +132,7 @@ public class RequestFollow extends HttpServlet {
 	                stringBuilder.append(charBuffer, 0, bytesRead);
 	            }
 	        } else {
-	            stringBuilder.append("");
+	             stringBuilder.append("");
 	        }
 	    } catch (IOException ex) {
 	        throw ex;
@@ -121,8 +145,53 @@ public class RequestFollow extends HttpServlet {
 	            }
 	        }
 	    }
-
 	    body = stringBuilder.toString();
 	    return body;
 	}
+	
+	private void getfollowID(String json) {
+		// TODO Auto-generated method stub
+		System.out.println(json);
+		
+		try
+		{
+			parser = new JsonParser();
+			jsonTree = parser.parse(json);
+			jsonObject = jsonTree.getAsJsonObject();
+			
+			System.out.println(jsonObject.toString());
+			
+			entityID = jsonObject.get("entityID");
+			_entityID = entityID.toString().replace("\"", "");
+			_entityID = _entityID + ".follow"; 
+
+			System.out.println(_entityID);
+			
+			permission = jsonObject.get("permission");
+			_permission= permission.toString().replace("\"", "");
+
+			System.out.println(_permission);
+			
+			validity = jsonObject.get("validity");
+			_validity= validity.toString().replace("\"", "");
+
+			System.out.println(_validity);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error : Not found");
+
+		}
+	}
+	
+	
+	private void sendfollowrequest(String _entityID, String _permission, String _requestorID, String _validity) {
+		// TODO Auto-generated method stub
+		
+		broker = new rbccps.smartcity.IDEAM.registerapi.broker.broker();
+		broker.publish(_entityID,_permission,_requestorID,_validity);
+		
+	}
+
+
 }

@@ -1,4 +1,4 @@
-package rbccps.smartcity.IDEAM.registerapi;
+package rbccps.smartcity.IDEAM.APIs;
 
 import java.io.IOException;
 
@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-@Path("/redirect")
-public class RequestRedirect extends HttpServlet{
+@Path("/share")
+public class RequestShare extends HttpServlet{
 	
 	/**
 	 * 
