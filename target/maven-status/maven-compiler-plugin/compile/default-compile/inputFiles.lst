@@ -12,12 +12,14 @@
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/video/videoServerConfiguration.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/video/videoserverConfigurationParser.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/APIs/RequestFollow.java
+/home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/APIs/RequestFollow.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/catalog/uCat.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/kong/Register.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/deregister/Deregister.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/kong/apiGateway.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/urls/URLs.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/ldap/updateLDAP.java
+/home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/APIs/RequestShare.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/APIs/RequestShare.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/RequestRedirect.java
 /home/vasanth/Work/Workspace/Java/ManagementAPI/src/rbccps/smartcity/IDEAM/registerapi/lora/loraserverConfigurationFields.java

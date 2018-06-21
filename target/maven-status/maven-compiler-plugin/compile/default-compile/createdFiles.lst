@@ -34,6 +34,9 @@ rbccps/smartcity/IDEAM/registerapi/parser/createEntityJSONParser.class
 rbccps/smartcity/IDEAM/APIs/RequestRedirect.class
 rbccps/smartcity/IDEAM/registerapi/video/videoserverConfigurationFields.class
 rbccps/smartcity/IDEAM/registerapi/lora/loraserverConfigurationFields.class
+rbccps/smartcity/IDEAM/APIs/RequestRedirect.class
+rbccps/smartcity/IDEAM/registerapi/video/videoserverConfigurationFields.class
+rbccps/smartcity/IDEAM/registerapi/lora/loraserverConfigurationFields.class
 rbccps/smartcity/IDEAM/registerapi/RequestFollow.class
 rbccps/smartcity/IDEAM/registerapi/video/videoserverConfigurationFields.class
 rbccps/smartcity/IDEAM/registerapi/lora/loraserverConfigurationFields.class
