@@ -57,7 +57,8 @@ public class RequestShare extends HttpServlet{
 	
 	static JsonElement validity;
 	static String _validity = null;
-	
+	static String _validityUnits = null;
+	static String _expiryTime = null;
 
 	@GET
 	public void doGet(@Context HttpServletResponse response) throws IOException{
@@ -201,6 +202,27 @@ public class RequestShare extends HttpServlet{
 			_write = "true";
 		}		
 
+		// YMDhms
+		
+		if(_validity.contains("Y")) {
+			_validityUnits = "Year";
+		} else if(_validity.contains("M")) {
+			_validityUnits = "Month";
+		} else if(_validity.contains("D")) {
+			_validityUnits = "Day";
+		} else if(_validity.contains("h")) {
+			_validityUnits = "hour";
+		} else if(_validity.contains("m")) {
+			_validityUnits = "minute";
+		} else if(_validity.contains("s")) {
+			_validityUnits = "seconds";
+		}
+		System.out.println(_validityUnits);
+		
+		for(int i = 0; i< _validity.length(); i ++) {
+			System.out.println(_validity.charAt(i));
+		}
+		
 		LDAP addShareEntryToLdap = new LDAP();
 		addShareEntryToLdap.addShareEntry(_entityID, _requestorID, _read, _write, _validity);
 				
