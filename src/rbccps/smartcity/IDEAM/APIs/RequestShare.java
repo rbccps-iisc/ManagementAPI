@@ -4,12 +4,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -59,6 +65,13 @@ public class RequestShare extends HttpServlet{
 	static String _validity = null;
 	static String _validityUnits = null;
 	static String _expiryTime = null;
+	static LocalDate _expireDate = null;
+	static LocalTime _expiretime = null;
+	static LocalDateTime _expiry = null; 
+	static ZoneId zoneId = null;
+	static long epoch;
+	
+	static String temp = null;
 
 	@GET
 	public void doGet(@Context HttpServletResponse response) throws IOException{
@@ -212,19 +225,42 @@ public class RequestShare extends HttpServlet{
 			_validityUnits = "Day";
 		} else if(_validity.contains("h")) {
 			_validityUnits = "hour";
-		} else if(_validity.contains("m")) {
+		} else if(_validity.contains("m")) { 
 			_validityUnits = "minute";
 		} else if(_validity.contains("s")) {
 			_validityUnits = "seconds";
 		}
 		System.out.println(_validityUnits);
-		
-		for(int i = 0; i< _validity.length(); i ++) {
+		temp = "";
+		for(int i = 0; i< _validity.length() -1; i ++) {
 			System.out.println(_validity.charAt(i));
+			temp = temp + _validity.charAt(i);
 		}
+
+		if(_validityUnits == "Year") {
+			_expireDate = LocalDate.now().plusYears(Long.parseLong(temp));
+		} else if(_validityUnits == "Month") {
+			_expireDate = LocalDate.now().plusMonths(Long.parseLong(temp));
+		}  else if(_validityUnits == "Day") {
+			_expireDate = LocalDate.now().plusDays(Long.parseLong(temp));	
+		} 
 		
+		 _expiretime = LocalTime.now();
+		
+		 System.out.println("Expiry Date is : "+_expireDate.toString());
+		 System.out.println("Expiry Time is : "+_expiretime.toString()); 
+		 
+		 _expiry = LocalDateTime.of(_expireDate, _expiretime);
+		 
+		 System.out.println("Expiry is : "+_expiry.toString());
+		 zoneId = ZoneId.systemDefault();
+		 epoch = _expiry.atZone(zoneId).toInstant().toEpochMilli();
+		 
+		 System.out.println("Epoch is : "+epoch);
+		 _validity = epoch+"";
+		 
 		LDAP addShareEntryToLdap = new LDAP();
 		addShareEntryToLdap.addShareEntry(_entityID, _requestorID, _read, _write, _validity);
-				
+
 	}
 }
