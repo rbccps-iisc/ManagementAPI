@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import rbccps.smartcity.IDEAM.APIs.RequestController;
+import rbccps.smartcity.IDEAM.APIs.RequestRegister;
 import rbccps.smartcity.IDEAM.registerapi.broker.broker;
 import rbccps.smartcity.IDEAM.registerapi.catalog.uCat;
 import rbccps.smartcity.IDEAM.registerapi.kong.apiGateway;
@@ -43,7 +43,7 @@ public class createEntityJSONParser {
 	static String response_createQueue = null;
 	static String response_updateLDAPEntry = null;
 	static String response_updateCat = null;
-	static RequestController controller;
+	static RequestRegister controller;
 	static String json;
 
 	static externalServerValidator _externalServerValidator = new externalServerValidator();
@@ -114,7 +114,7 @@ public class createEntityJSONParser {
 		
 		// System.out.println(accessMechanism_json.replaceAll("\\\\", ""));
 
-		controller = new RequestController();
+		controller = new RequestRegister();
 		json = controller.getBody();
 		
 		System.out.println("------------------BODY------------------");
@@ -363,7 +363,7 @@ public class createEntityJSONParser {
 				System.out.println(apiKey);
 
 				response_updateLDAPEntry = updateLDAP.createEntry(
-						RequestController.getX_Consumer_Username(),
+						RequestRegister.getX_Consumer_Username(),
 						ID.toString(), apiKey);
 				System.out.println("LDAP Success !!!");
 				System.out.println("------STEP 5------");
@@ -383,7 +383,7 @@ public class createEntityJSONParser {
 				System.out.println(apiKey);
 
 				response_updateLDAPEntry = updateLDAP.createVideoEntry(
-						RequestController.getX_Consumer_Username(),
+						RequestRegister.getX_Consumer_Username(),
 						ID.toString(), apiKey);
 				System.out.println("LDAP Success !!!");
 				System.out.println("------STEP 5------");

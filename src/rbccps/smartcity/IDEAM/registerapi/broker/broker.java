@@ -8,7 +8,7 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import rbccps.smartcity.IDEAM.APIs.RequestController;
+import rbccps.smartcity.IDEAM.APIs.RequestRegister;
 import rbccps.smartcity.IDEAM.urls.URLs;
 
 import com.google.gson.JsonObject;
