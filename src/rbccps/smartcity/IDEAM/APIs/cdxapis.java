@@ -17,6 +17,8 @@ public class cdxapis {
 		servletBuilder.setDeploymentName("cdx").setContextPath("/cdx");
 		
 		servletBuilder.addServlets(Servlets.servlet("redirect", new RequestRedirect().getClass()).addMapping("/redirect"));
+		servletBuilder.addServlets(Servlets.servlet("follow", new RequestFollow().getClass()).addMapping("/follow"));
+		servletBuilder.addServlets(Servlets.servlet("share", new RequestShare().getClass()).addMapping("/share"));
 		
 		manager = Servlets.defaultContainer().addDeployment(servletBuilder);
 		manager.deploy();
@@ -24,5 +26,4 @@ public class cdxapis {
 		Undertow server = Undertow.builder().addHttpListener(8888, "localhost").setHandler(path).build();
 		server.start();
 	}
-
 }
