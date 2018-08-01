@@ -19,6 +19,7 @@ public class cdxapis {
 		servletBuilder.addServlets(Servlets.servlet("redirect", new RequestRedirect().getClass()).addMapping("/redirect"));
 		servletBuilder.addServlets(Servlets.servlet("follow", new RequestFollow().getClass()).addMapping("/follow"));
 		servletBuilder.addServlets(Servlets.servlet("share", new RequestShare().getClass()).addMapping("/share"));
+		servletBuilder.addServlets(Servlets.servlet("search", new RequestSearch().getClass()).addMapping("/search"));
 		
 		manager = Servlets.defaultContainer().addDeployment(servletBuilder);
 		manager.deploy();
