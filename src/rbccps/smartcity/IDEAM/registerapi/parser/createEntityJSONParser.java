@@ -324,17 +324,27 @@ public class createEntityJSONParser {
 
 				// Create Exchange and Queue for LoRa and IPDevice
 				if (!videoCamera) {
-					broker.createExchange(ID);
 					broker.createExchange(ID + ".private");
 					broker.createExchange(ID + ".public");
 					broker.createExchange(ID + ".protected");
 					broker.createExchange(ID + ".configure");
 					broker.createExchange(ID + ".follow");
-					System.out.println("+++++++++++Calling createDatabaseBinding Block+++++++++++");
+					
+					System.out.println("+++++++++++Calling create Database Binding Block+++++++++++");
+					
 					response_createQueue = broker.createQueue(ID);
+					response_createQueue = broker.createQueue(ID + ".configure");					
 					response_createQueue = broker.createQueue(ID + ".follow");
-					broker.createBinding(ID, "database");
+					response_createQueue = broker.createQueue(ID + ".priority");
+					
+					broker.createBinding(ID  + ".private", "database");
+					broker.createBinding(ID  + ".public", "database");
+					broker.createBinding(ID  + ".protected", "database");
+					broker.createBinding(ID  + ".configure", "database");
+					broker.createBinding(ID  + ".follow", "database");
+										
 					broker.createBinding(ID + ".follow", ID + ".follow");
+					broker.createBinding(ID + ".configure", ID + ".configure");
 					
 				} else {
 					System.out.println("Its a videoCamera");
