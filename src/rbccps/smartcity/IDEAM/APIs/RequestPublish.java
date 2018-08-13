@@ -25,7 +25,8 @@ public class RequestPublish extends HttpServlet {
 	static String body;
 	static PrintWriter out;
 	
-	static ExecutorService executor=Executors.newCachedThreadPool();
+
+	static ExecutorService executor=Executors.newSingleThreadExecutor();
 	static int STATUS_OK = 200;
 	
 	String[] requestURI;
