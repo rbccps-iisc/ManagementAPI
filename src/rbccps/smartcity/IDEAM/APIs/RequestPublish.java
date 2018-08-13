@@ -25,7 +25,7 @@ public class RequestPublish extends HttpServlet {
 	static String body;
 	static PrintWriter out;
 	
-	static ExecutorService executor=Executors.newSingleThreadExecutor();
+	static ExecutorService executor=Executors.newCachedThreadPool();
 	static int STATUS_OK = 200;
 	
 	String[] requestURI;
@@ -92,8 +92,8 @@ class publish implements Runnable
 			factory.setUsername(token.split(":")[0]);
 			factory.setPassword(token.split(":")[1]);
 			factory.setVirtualHost("/");
-			factory.setHost("127.0.0.1");
-			factory.setPort(12082);
+			factory.setHost("rabbitmq");
+			factory.setPort(5672);
 
 			try 
 			{
