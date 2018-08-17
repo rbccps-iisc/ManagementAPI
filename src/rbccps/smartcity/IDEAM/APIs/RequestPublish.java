@@ -44,14 +44,14 @@ public class RequestPublish extends HttpServlet {
 		exchange = requestURI[1];
 		
 		String routingKey;
-		
+	
 		try
 		{
 			routingKey=request.getHeader("routingKey");
 		}
 		catch(Exception e)
 		{
-			System.out.println("Routing key not specified");
+
 		}
 		finally
 		{

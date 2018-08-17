@@ -42,8 +42,7 @@ public class RequestExchange extends HttpServlet
 			e.printStackTrace();
 			response.getWriter().println("Error creating exchange");
 		}
-		
-		
+	
 	}
 	
 	@Override
@@ -70,12 +69,11 @@ public class RequestExchange extends HttpServlet
 			channel.exchangeDelete(exchange);
 			connection.close();
 			response.getWriter().println("Deleted Exchange "+exchange);
-		}
+    }
 		catch(Exception e)
 		{
 			e.printStackTrace();
 			response.getWriter().println("Error deleting exchange");
 		}
-		
 	}
 }

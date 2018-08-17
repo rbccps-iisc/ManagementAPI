@@ -42,8 +42,6 @@ public class RequestQueue extends HttpServlet
 			e.printStackTrace();
 			response.getWriter().println("Error creating queue "+queue);
 		}
-		
-		
 	}
 	
 	@Override
@@ -76,9 +74,5 @@ public class RequestQueue extends HttpServlet
 			e.printStackTrace();
 			response.getWriter().println("Error deleting queue "+queue);
 		}
-		
-		
 	}
-	
-	
 }

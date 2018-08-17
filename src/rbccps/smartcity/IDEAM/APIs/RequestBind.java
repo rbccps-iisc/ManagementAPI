@@ -3,6 +3,7 @@ package rbccps.smartcity.IDEAM.APIs;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,7 +45,6 @@ public class RequestBind extends HttpServlet
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		readldappwd();
-		
 		String queue=request.getRequestURI().split("/")[3];
 		String exchange=request.getRequestURI().split("/")[4];
 		
@@ -141,7 +141,6 @@ public class RequestBind extends HttpServlet
 			e.printStackTrace();
 			response.getWriter().println("Unable to bind queue");
 		}
-	
 	}
 	
 	@Override
@@ -190,6 +189,5 @@ public class RequestBind extends HttpServlet
 			e.printStackTrace();
 			response.getWriter().println("Unable to unbind queue");
 		}
-		
 	}
 }
