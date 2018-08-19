@@ -340,7 +340,8 @@ public class createEntityJSONParser {
 				response.addProperty("Reason", "Failed in adding ID into the ACL");
 				apiGateway.deleteUser(ID);
 				return response.toString();
-				// If queue and exchange creation was stopped midway, remove appropriate entries here 
+				// If queue and exchange creation was stopped midway, remove appropriate entries
+				// here
 			}
 			if (response_createQueue.contains("Created")) {
 
@@ -382,8 +383,8 @@ public class createEntityJSONParser {
 				System.out.println("------------");
 			} else {
 				response.addProperty("Registration", "failure");
-				response.addProperty("Reason", "Failed in Broker");
-				
+				response.addProperty("Reason", "Failed in LDAP");
+
 				apiGateway.deleteUser(ID);
 				broker.deleteExchange(ID + ".private");
 				broker.deleteExchange(ID + ".public");
@@ -394,7 +395,7 @@ public class createEntityJSONParser {
 				broker.deleteQueue(ID + ".configure");
 				broker.deleteQueue(ID + ".follow");
 				broker.deleteQueue(ID + ".priority");
-	
+
 				return response.toString();
 			}
 			if (response_updateLDAPEntry != null) {
@@ -422,7 +423,8 @@ public class createEntityJSONParser {
 			} else {
 				response.addProperty("Registration", "failure");
 				response.addProperty("Reason", "uCat update Failure");
-				
+
+				apiGateway.deleteUser(ID);
 				broker.deleteExchange(ID + ".private");
 				broker.deleteExchange(ID + ".public");
 				broker.deleteExchange(ID + ".protected");
@@ -432,10 +434,8 @@ public class createEntityJSONParser {
 				broker.deleteQueue(ID + ".configure");
 				broker.deleteQueue(ID + ".follow");
 				broker.deleteQueue(ID + ".priority");
-				apiGateway.deleteUser(ID);
-				
-				// Delete ID in LDAP
-				
+				updateLDAP.deleteEntry(owner.getOwnerID(), ID, owner.getOwnerKey());
+
 				return response.toString();
 
 			}
