@@ -65,6 +65,7 @@ public class deleteEntityJSONParser {
 			
 			// Store entitySchema and ID in entity class for easy access.
 		
+			entity.setEntityID(jsonObject.get("id").getAsString());
 			
 			System.out.println("Kick Start the flow");
 
@@ -74,6 +75,8 @@ public class deleteEntityJSONParser {
 	
 				ID = ID.replaceAll("^\"|\"$", "");
 				System.out.println(ID);
+				
+				// Find if the entity is deleted by actual owner
 				
 				// STEP 1
 				if (ID != null) {
@@ -88,11 +91,21 @@ public class deleteEntityJSONParser {
 				}
 
 				// STEP 2				
-				if (response_deleteID.contains("created")) {
+				if (response_deleteID.contains("Deleted consumer in KONG")) {
 					System.out.println("------STEP 2------");
-					broker.deleteExchange(ID);
-					broker.deleteExchange(ID+".configure");
-					response_deleteQueue = broker.deleteQueue(ID);
+				
+					broker.readbrokerpassword();
+					broker.deleteExchange(ID + ".private");
+					broker.deleteExchange(ID + ".public");
+					broker.deleteExchange(ID + ".protected");
+					broker.deleteExchange(ID + ".configure");
+					broker.deleteExchange(ID + ".follow");
+					broker.deleteExchange(ID + ".notify");
+					broker.deleteQueue(ID);
+					broker.deleteQueue(ID + ".configure");
+					broker.deleteQueue(ID + ".follow");
+					broker.deleteQueue(ID + ".notify");
+					response_deleteQueue = broker.deleteQueue(ID + ".priority");
 					
 					System.out.println("------------");
 					System.out.println(response_deleteQueue);
@@ -110,7 +123,7 @@ public class deleteEntityJSONParser {
 				
 				// STEP 3
 				
-				if (response_deleteQueue.contains("delete queue ok")) {
+				if (response_deleteQueue.contains("deleted")) {
 					
 					System.out.println(ID);
 					System.out.println(entity.getEntityapikey());
@@ -137,7 +150,7 @@ public class deleteEntityJSONParser {
 				
 				// STEP 4				
 				
-				if (response_deleteLDAPEntry != null) {
+				if (response_deleteLDAPEntry == "Success") {
 					response_deleteCat = uCatServer.postCat("");
 					System.out.println("------STEP 6------");
 					System.out.println("------------");
