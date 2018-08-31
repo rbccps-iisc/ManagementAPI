@@ -78,11 +78,10 @@ public class updateLDAP {
 			String x_Consumer_Custom_ID, String apiKey) {
 		// TODO Auto-generated method stub
 		
-		LDAP deleteEntryToLdap = new LDAP();
-		deleteEntryToLdap.readldappwd();
+		LDAP.readldappwd();
 		
 		String addEntry_Response;
-		if (deleteEntryToLdap.deleteEntry(entityID, x_Consumer_Custom_ID, apiKey )) {
+		if (LDAP.deleteEntry(entityID, x_Consumer_Custom_ID, apiKey )) {
 			System.out.println("entry deletion completed");
 			addEntry_Response = "Success";
 			// Add a FLAG to process the Registration further
