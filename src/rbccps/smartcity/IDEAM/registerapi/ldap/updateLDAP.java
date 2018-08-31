@@ -94,6 +94,6 @@ public class updateLDAP {
 			// End the Process with a RESPONSE stating ID already available.
 		}
 
-		return null;
+		return addEntry_Response;
 	}
 }
