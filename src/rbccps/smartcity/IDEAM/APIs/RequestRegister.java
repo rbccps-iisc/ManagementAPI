@@ -14,13 +14,14 @@ import org.json.simple.JSONObject;
 
 import rbccps.smartcity.IDEAM.registerapi.kong.Register;
 import rbccps.smartcity.IDEAM.registerapi.parser.createEntityJSONParser;
+import rbccps.smartcity.IDEAM.registerapi.parser.deleteEntityJSONParser;
 import rbccps.smartcity.IDEAM.registerapi.parser.entity;
 import rbccps.smartcity.IDEAM.registerapi.parser.owner;
 import rbccps.smartcity.IDEAM.registerapi.deregister.*;
 
 public class RequestRegister extends HttpServlet {
 
-	private static final createEntityJSONParser DeleteEntityJSONParser = null;
+	private static final deleteEntityJSONParser DeleteEntityJSONParser = null;
 
 	Register register = new Register();
 
@@ -48,10 +49,25 @@ public class RequestRegister extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		resp = (HttpServletResponse) getAPIKey(req, resp);
 		out = resp.getWriter();
 		resp.setContentType("application/json");
 		out.print(returnData);
+	}
+
+	
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		super.doDelete(req, resp);
+		
+		String returnData = deleteAPIKey(req);
+		out = resp.getWriter();
+		resp.setContentType("application/json");
+		out.print(returnData);
+		
 	}
 
 	public HttpServletResponse getAPIKey(HttpServletRequest request, HttpServletResponse resp) {
