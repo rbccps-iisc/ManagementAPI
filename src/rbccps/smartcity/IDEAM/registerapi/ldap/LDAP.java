@@ -989,14 +989,15 @@ public class LDAP {
 		return true;
 	}
 
-	public boolean verifyProvider(String userId,
+	public static boolean verifyProvider(String userId,
 			String[] decoded_authorization_data) {
 
 		boolean flag = false;
 		entryDN = "uid=" + userId + ",cn=devices,dc=smartcity";
+		System.out.println("In verifyProvider");
 
 		try {
-
+			readldappwd();
 			LDAPEntry = dirContext.getAttributes(entryDN).toString();
 			System.out.println(LDAPEntry);
 
@@ -1005,9 +1006,13 @@ public class LDAP {
 			String[] providerName = LDAPEntry_Split[0].split("=");
 			String[] provider = providerName[1].split(":");
 			provider[1] = provider[1].replaceAll("\\s+", "");
+			
 
 			String submitted_providerName = decoded_authorization_data[0];
 
+			System.out.println(provider[1] + "   --  " + decoded_authorization_data[0] + " --  " + decoded_authorization_data[1]);
+			
+			
 			if (provider[1].contains(submitted_providerName)) {
 				System.out.println("Valid Device of the User");
 				flag = true;

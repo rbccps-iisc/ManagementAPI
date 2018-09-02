@@ -14,6 +14,7 @@ import rbccps.smartcity.IDEAM.APIs.RequestRegister;
 import rbccps.smartcity.IDEAM.registerapi.broker.broker;
 import rbccps.smartcity.IDEAM.registerapi.catalog.uCat;
 import rbccps.smartcity.IDEAM.registerapi.kong.apiGateway;
+import rbccps.smartcity.IDEAM.registerapi.ldap.LDAP;
 import rbccps.smartcity.IDEAM.registerapi.ldap.updateLDAP;
 
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import com.google.gson.JsonParser;
 public class deleteEntityJSONParser {
 	
 	static JsonObject response_jsonObject;
+	private static String[] decoded_authorization_datas;
 	
 	public static String JSONParser() {
 	
@@ -32,7 +34,7 @@ public class deleteEntityJSONParser {
 
 		BufferedReader br;
 		String _json = null;
-		String apiKey;
+		String apiKey = null;
 		String ID;
 		String response_deleteID = null;
 		String response_deleteapiKey = null;
@@ -77,6 +79,14 @@ public class deleteEntityJSONParser {
 				System.out.println(ID);
 				
 				// Find if the entity is deleted by actual owner
+				
+				decoded_authorization_datas = new String[2];
+				decoded_authorization_datas[0] = RequestRegister.getX_Consumer_Username();
+				decoded_authorization_datas[1] = apiKey;
+				System.out.println(decoded_authorization_datas[0] + " and " + decoded_authorization_datas[1]);
+				if(LDAP.verifyProvider(ID, decoded_authorization_datas)) {
+					System.out.println("Device belongs to owner");
+				
 				
 				// STEP 1
 				if (ID != null) {
@@ -123,7 +133,7 @@ public class deleteEntityJSONParser {
 				
 				// STEP 3
 				
-				if (response_deleteQueue.contains("deleted")) {
+				if (response_deleteQueue.contains("Deleted")) {
 					
 					System.out.println(ID);
 					System.out.println(entity.getEntityapikey());
@@ -131,7 +141,7 @@ public class deleteEntityJSONParser {
 					ID = ID.replaceAll("^\"|\"$", "");
 					System.out.println(ID);
 					
-					response_deleteLDAPEntry = updateLDAP.deleteEntry(RequestRegister.getX_Consumer_Custom_ID(),
+					response_deleteLDAPEntry = updateLDAP.deleteEntry(RequestRegister.getX_Consumer_Username(),
 							ID.toString(), entity.getEntityapikey().toString());
 					
 					/*
@@ -151,7 +161,7 @@ public class deleteEntityJSONParser {
 				// STEP 4				
 				
 				if (response_deleteLDAPEntry == "Success") {
-					response_deleteCat = uCatServer.postCat("");
+					response_deleteCat = uCat.deleteCat(ID);
 					System.out.println("------STEP 6------");
 					System.out.println("------------");
 					System.out.println(response_deleteCat);
@@ -165,9 +175,15 @@ public class deleteEntityJSONParser {
 				if(response_deleteCat >=200 && response_deleteCat<300){
 					response.addProperty("De-Registration", "success");
 					response.addProperty("entityID", ID);
-				} else {
+				}
+				else {
 					response.addProperty("De-Registration", "failure");
-					response.addProperty("Reason", "uCat deletion Failure");
+					response.addProperty("Reason", "uCat delete Failure");
+				}
+			}
+				else {
+					response.addProperty("De-Registration", "failure");
+					response.addProperty("Reason", "Device does not belong to Owner");
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

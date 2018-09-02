@@ -3,6 +3,7 @@ public class updateLDAP {
 
 	
 	private static String[] decoded_authorization_datas;
+	static String addEntry_Response;
 
 	public static String createEntry(String providerID, String resourceID, String apiKey) {
 		// TODO Auto-generated method stub
@@ -77,10 +78,12 @@ public class updateLDAP {
 	public static String deleteEntry(String entityID,
 			String x_Consumer_Custom_ID, String apiKey) {
 		// TODO Auto-generated method stub
-		
+
 		LDAP.readldappwd();
+		System.out.println("In deleteEntry");
 		
-		String addEntry_Response;
+		{
+		
 		if (LDAP.deleteEntry(entityID, x_Consumer_Custom_ID, apiKey )) {
 			System.out.println("entry deletion completed");
 			addEntry_Response = "Success";
@@ -94,5 +97,7 @@ public class updateLDAP {
 		}
 
 		return addEntry_Response;
+		}
+		
 	}
 }
