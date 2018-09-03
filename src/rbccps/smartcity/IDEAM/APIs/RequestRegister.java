@@ -63,8 +63,7 @@ public class RequestRegister extends HttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.doDelete(req, resp);
-		
+	
 		resp = (HttpServletResponse) deleteAPIKey(req,resp);
 		System.out.println("Completed : " + returnData);
 		out = resp.getWriter();
@@ -149,7 +148,7 @@ public class RequestRegister extends HttpServlet {
 		
 		returnData = DeleteEntityJSONParser.JSONParser();
 		System.out.println(returnData);
-		
+		response.setStatus(200, returnData);
 		return response;
 	}
 
