@@ -222,9 +222,16 @@ public class createEntityJSONParser {
 	private static String startFlow() {
 		state = 0;
 		String _dataSchema = _entitySchemaParser.parse(jsonObject, access_jsonTree);
-		ID = entity.getEntityID().toString();
-		System.out.println(ID);
+		if (entity.getEntityID() == null) {
+			System.out.println("The ID is missing");
+			response.addProperty("Registration", "failure");
+			response.addProperty("Reason", "ID is missing");
 
+			return response.toString();
+		} else {
+			ID = entity.getEntityID().toString();
+			System.out.println(ID);
+		}
 		if (ID.trim().length() == 0 || ID.contains("null")) {
 			System.out.println("The ID is invalid " + ID);
 			System.out.println(ID);
