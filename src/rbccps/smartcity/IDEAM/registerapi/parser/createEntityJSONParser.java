@@ -229,18 +229,19 @@ public class createEntityJSONParser {
 				System.out.println("The ID is missing");
 				response.addProperty("Registration", "failure");
 				response.addProperty("Reason", "ID is missing");
-
+				isSubscriber = false;
 				return response.toString();
 			} else {
 				ID = entity.getEntityID().toString();
 				System.out.println(ID);
+				
 			}
 			if (ID.trim().length() == 0 || ID.contains("null")) {
 				System.out.println("The ID is invalid " + ID);
 				System.out.println(ID);
 				response.addProperty("Registration", "failure");
 				response.addProperty("Reason", "ID is invalid");
-
+				isSubscriber = false;
 				return response.toString();
 			}
 			
