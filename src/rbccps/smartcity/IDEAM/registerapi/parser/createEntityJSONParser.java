@@ -222,6 +222,35 @@ public class createEntityJSONParser {
 	private static String startFlow() {
 		state = 0;
 		String _dataSchema = _entitySchemaParser.parse(jsonObject, access_jsonTree);
+
+		if (isSubscriber) {
+			
+			if (entity.getEntityID() == null) {
+				System.out.println("The ID is missing");
+				response.addProperty("Registration", "failure");
+				response.addProperty("Reason", "ID is missing");
+
+				return response.toString();
+			} else {
+				ID = entity.getEntityID().toString();
+				System.out.println(ID);
+			}
+			if (ID.trim().length() == 0 || ID.contains("null")) {
+				System.out.println("The ID is invalid " + ID);
+				System.out.println(ID);
+				response.addProperty("Registration", "failure");
+				response.addProperty("Reason", "ID is invalid");
+
+				return response.toString();
+			}
+			
+			subscriber_response = createsubscriberEntity.createEntity(ID);
+			response = subscriber_response;
+			System.out.println(subscriber_response);
+			isSubscriber = false;
+			return subscriber_response.toString();
+		}
+		
 		if (entity.getEntityID() == null) {
 			System.out.println("The ID is missing");
 			response.addProperty("Registration", "failure");
@@ -239,15 +268,6 @@ public class createEntityJSONParser {
 			response.addProperty("Reason", "ID is invalid");
 
 			return response.toString();
-		}
-
-		if (isSubscriber) {
-			ID = _dataSchema;
-			subscriber_response = createsubscriberEntity.createEntity(ID);
-			response = subscriber_response;
-			System.out.println(subscriber_response);
-			isSubscriber = false;
-			return subscriber_response.toString();
 		}
 
 		// Store entitySchema and ID in entity class for easy access.
